@@ -1,9 +1,16 @@
 const bcrypt = require('bcrypt');
 
 const { User } = require('../../models/MongooseModels');
+const { HttpError } = require('../../helpers');
 
 const register = async (req, res) => {
-  const { password } = req.body;
+  const { password, email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    throw HttpError(409, 'Email in use');
+  }
 
   const hashPassword = await bcrypt.hash(password, 10);
 

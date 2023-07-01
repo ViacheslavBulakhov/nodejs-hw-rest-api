@@ -1,17 +1,30 @@
 const express = require('express');
 
-const { validateBody } = require('../../middlewares');
+const { validateBody, authenticate } = require('../../middlewares');
 const { registerSchema, logInSchema } = require('../../models/JoiSchemas');
-const { register, login } = require('../../controllers/auth');
+const {
+  register,
+  login,
+  logout,
+  getCurrentUser,
+  updateUserSubscription,
+} = require('../../controllers/auth');
+const {
+  updateUserSubscriptionSchema,
+} = require('../../models/JoiSchemas/user');
 
 const authRouter = express.Router();
 
 authRouter.post('/register', validateBody(registerSchema), register);
-
 authRouter.post('/login', validateBody(logInSchema), login);
+authRouter.post('/logout', authenticate, logout);
 
-authRouter.post('/logout', validateBody(registerSchema), () =>
-  console.log('logout')
+authRouter.post('/current', authenticate, getCurrentUser);
+authRouter.patch(
+  '/',
+  authenticate,
+  validateBody(updateUserSubscriptionSchema),
+  updateUserSubscription
 );
 
 module.exports = authRouter;
