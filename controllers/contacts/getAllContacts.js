@@ -1,6 +1,6 @@
-const Contact = require('../../models/MongooseModels/contact');
+const { Contact } = require('../../models/MongooseModels');
 
-const { HttpError, ctrlWrapper } = require('../../helpers');
+const { ctrlWrapper } = require('../../helpers');
 
 const getAllContacts = async (req, res) => {
   const data = await Contact.find({}, '-createdAt -updatedAt');

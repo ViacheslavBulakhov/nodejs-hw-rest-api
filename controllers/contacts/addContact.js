@@ -1,6 +1,6 @@
-const Contact = require('../../models/MongooseModels/contact');
+const { Contact } = require('../../models/MongooseModels');
 
-const { HttpError, ctrlWrapper } = require('../../helpers');
+const { ctrlWrapper } = require('../../helpers');
 
 const addContact = async (req, res) => {
   const result = await Contact.create(req.body);
