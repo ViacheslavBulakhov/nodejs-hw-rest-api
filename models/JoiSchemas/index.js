@@ -1,9 +1,9 @@
-const {
-    reqContactSchema,
-    updateFavoriteShema,
-  } = require ("./contact.js")
+const { reqContactSchema, updateFavoriteShema } = require('./contact.js');
+const { registerSchema, logInSchema } = require('./user.js');
 
-  module.exports = {
-    reqContactSchema,
-    updateFavoriteShema,
-  }
+module.exports = {
+  reqContactSchema,
+  updateFavoriteShema,
+  registerSchema,
+  logInSchema,
+};

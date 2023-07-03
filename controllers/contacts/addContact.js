@@ -1,9 +1,11 @@
-const Contact = require('../../models/MongooseModels/contact');
+const { Contact } = require('../../models/MongooseModels');
 
-const { HttpError, ctrlWrapper } = require('../../helpers');
+const { ctrlWrapper } = require('../../helpers');
 
 const addContact = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
