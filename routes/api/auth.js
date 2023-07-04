@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { validateBody, authenticate } = require('../../middlewares');
+const { validateBody, authenticate, upload } = require('../../middlewares');
 const { registerSchema, logInSchema } = require('../../models/JoiSchemas');
 const {
   register,
@@ -8,6 +8,7 @@ const {
   logout,
   getCurrentUser,
   updateUserSubscription,
+  updateAvatar,
 } = require('../../controllers/auth');
 const {
   updateUserSubscriptionSchema,
@@ -20,11 +21,19 @@ authRouter.post('/login', validateBody(logInSchema), login);
 authRouter.post('/logout', authenticate, logout);
 
 authRouter.post('/current', authenticate, getCurrentUser);
+
 authRouter.patch(
   '/',
   authenticate,
   validateBody(updateUserSubscriptionSchema),
   updateUserSubscription
+);
+
+authRouter.patch(
+  '/avatars',
+  authenticate,
+  upload.single('avatar'),
+  updateAvatar
 );
 
 module.exports = authRouter;
