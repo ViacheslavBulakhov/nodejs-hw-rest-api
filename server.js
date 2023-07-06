@@ -1,7 +1,6 @@
 const app = require('./app');
 const mongoose = require('mongoose');
 
-
 mongoose
   .connect(process.env.MONGO_DB)
   .then(() => console.log('Database connection successful'))
